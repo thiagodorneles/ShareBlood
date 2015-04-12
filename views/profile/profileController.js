@@ -37,7 +37,10 @@ angular
                 var dt = new Date(parseInt(dates[2]), parseInt(dates[1])-1, parseInt(dates[0]));
                 profile.user.profile.birthdate = dt.toISOString().substr(0, 10);
             }
-            API.put('users/' + profile.user.id, profile.user)
+
+            var data = {};
+            data.user = profile.user;
+            API.put('users/' + profile.user.id, data)
                 .success(function(data){
                     // debugger;
                 })
