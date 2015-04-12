@@ -6,9 +6,9 @@ angular
 
     var donation = this;
 
-    API.get('blood_banks').success(function(data){
-      $scope.bloodbanks = data.blood_banks;
-    });
+    // API.get('blood_banks').success(function(data){
+    //   $scope.bloodbanks = data.blood_banks;
+    // });
 
     donation.search = function() {
       API.get('/api/', {'search' : donation.search_field})
@@ -30,7 +30,7 @@ angular
     donation.donate = function(item) {
 
       var data = {};
-      data.blood_bank_id = item.blood_bank.id;
+      data.donation_id = item.id;
       data.user_id = userService.get_user().id;
 
       API.post('donate_histories/', data)
@@ -39,7 +39,6 @@ angular
           item.confirmed_donated = true;
           item.percent = (item.donated * 100) / item.needed;
         });
-
     };
 
     donation.send = function() {
