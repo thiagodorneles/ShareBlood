@@ -23,6 +23,10 @@ angular
         .success(function(data){
           donation.donations = data.donations;
           angular.forEach(donation.donations, function(el){
+
+            if (!el.user.profile.image)
+              el.user.profile.image = 'assets/img/img-1.jpg';
+
             el.percent = (el.donated * 100) / el.needed;
           });
         });
