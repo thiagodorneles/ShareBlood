@@ -1,0 +1,23 @@
+<div class="container" ng-controller="profileController as profile">
+    <div class="card">
+    <div class="row">
+        <div class="col m4">
+            <h4 class="header">Meus dados</h4>
+            {{profile.user.name}}<br/>
+            {{profile.user.gender_description}}<br/>
+            {{profile.user.birthdate | date:'shortDate'}}
+        </div>
+        <div class="col m8">
+            <h4 class="header">Histórico de doações</h4>
+            <div class="divider"></div>
+            <ul class="collection">
+                <li class="collection-item" ng-repeat="history in profile.user.history">
+                    <span><strong>Data:</strong>{{history.date}}</span><br/>
+                    <span><strong>Para quem:</strong>{{history.who}}</span><br/>
+                    <span><strong>Onde:</strong>{{history.where}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+</div>
