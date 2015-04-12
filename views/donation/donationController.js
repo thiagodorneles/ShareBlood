@@ -6,15 +6,16 @@ angular
 
     var donation = this;
 
-    // API.get('blood_banks').success(function(data){
-    //   $scope.bloodbanks = data.blood_banks;
-    // });
-
-    donation.search = function() {
-      API.get('/api/', {'search' : donation.search_field})
-        .success(function(data){})
-        .error(function(data){});
-
+    donation.search = function($event) {
+      if (event.keyCode == 13) {
+        API.get('donations?query=' + donation.search_field)
+          .success(function(data){
+            donation.donations = data.donations;
+            angular.forEach(donation.donations, function(el){
+              el.percent = (el.donated * 100) / el.needed;
+            });
+          });
+      }
     };
 
     donation.list = function() {
@@ -30,10 +31,13 @@ angular
     donation.donate = function(item) {
 
       var data = {};
-      data.donation_id = item.id;
-      data.user_id = userService.get_user().id;
+      data.donation_history = {
+        donation_id : item.id,
+        user_id     : userService.get_user().id,
+        date        : new Date().toISOString().substring(0,10)
+      };
 
-      API.post('donate_histories/', data)
+      API.post('donation_histories/', data)
         .success(function(data){
           item.donated++;
           item.confirmed_donated = true;
