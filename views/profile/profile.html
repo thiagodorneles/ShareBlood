@@ -68,6 +68,11 @@
                 </div>
             </div>
             <div class="row">
+                <div class="input-field col m12">
+                    <input type="text" placeholder="URL da imagem" ng-model="profile.user.profile.image">
+                </div>
+            </div>
+            <div class="row">
                 <button type="submit">Atualizar</button>
             </div>
             </form>
@@ -76,10 +81,10 @@
             <h4 class="header">Histórico de doações</h4>
             <div class="divider"></div>
             <ul class="collection">
-                <li class="collection-item" ng-repeat="history in profile.user.history">
-                    <span><strong>Data:</strong>{{history.date}}</span><br/>
-                    <span><strong>Para quem:</strong>{{history.who}}</span><br/>
-                    <span><strong>Onde:</strong>{{history.where}}</span>
+                <li class="collection-item" ng-repeat="history in profile.user.histories">
+                    <!-- <span><strong>Data:</strong>{{history.donation.date}}</span><br/> -->
+                    <span><strong>Para quem:</strong>{{history.donation.favored}}</span><br/>
+                    <span><strong>Onde:</strong>{{history.donation.blood_bank.name}}</span>
                 </li>
             </ul>
         </div>

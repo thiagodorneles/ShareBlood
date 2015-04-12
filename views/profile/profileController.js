@@ -14,6 +14,11 @@ angular
 
                     var user = data.user;
 
+                    API.get('donation_histories?user_id=' + user_id)
+                        .success(function(data) {
+                            user.histories = data.donation_histories;
+                        });
+
                     if (user.profile.gender === 'M')
                         user.profile.gender_description = 'Masculino';
                     else
@@ -31,13 +36,13 @@ angular
                 var dates = profile.user.profile.birthdate.split('/');
                 var dt = new Date(parseInt(dates[2]), parseInt(dates[1])-1, parseInt(dates[0]));
                 profile.user.profile.birthdate = dt.toISOString().substr(0, 10);
-            }       
+            }
             API.put('users/' + profile.user.id, profile.user)
                 .success(function(data){
-                    debugger;
+                    // debugger;
                 })
                 .error(function(data) {
-                    debugger;
+                    // debugger;
                 });
 
         };
