@@ -9,6 +9,7 @@ body {
 }
 .navbar-fixed nav {
     background-color: $red;
+    z-index: 1000000;
 }
 .container-fluid {
     padding: 0 15px;
