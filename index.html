@@ -13,7 +13,8 @@
                 <a ng-href="/" class="brand-logo">
                     <img src="assets/img/logo.png" />
                 </a>
-                <ul class="right" ng-controller="userController as user">
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+                <ul class="right hide-on-med-and-down" ng-controller="userController as user">
                     <li><a ng-href="/faq">FAQ</a></li>
                     <li><a ng-show="logged" href="#modalCampaign" class="modal-trigger">Preciso de Sangue</a></li>
                     <li><a ng-hide="logged" href="#modalLogin" class="modal-trigger">Entrar</a></li>
@@ -29,7 +30,16 @@
                           <li><a ng-click="user.logout()">Sair</a></li>
                         </ul>
                     </li>
-
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a ng-href="/faq">FAQ</a></li>
+                    <li><a ng-show="logged" href="#modalCampaign" class="modal-trigger">Preciso de Sangue</a></li>
+                    <li><a ng-hide="logged" href="#modalLogin" class="modal-trigger">Entrar</a></li>
+                    <li><a ng-hide="logged" href="#modalRegister" class="modal-trigger">Cadastre-se</a></li>
+                    <li class="divider"></li>
+                    <li class="black-text" ng-show="logged"><h5>{{user_name}}</h5></li>
+                    <li ng-show="logged"><a ng-href="/meus-dados">Meus dados</a></li>
+                    <li ng-show="logged"><a ng-click="user.logout()">Sair</a></li>
                 </ul>
             </div>
         </nav>
@@ -110,6 +120,12 @@
                             <div class="input-field col m3 s12">
                                 <input id="birthdate" type="text" ng-model="register.user.profile.birthdate" mask="39/19/9999">
                                 <label for="birthdate">Data nascimento</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col m12">
+                                <input id="imagem" type="text" ng-model="register.user.profile.image">
+                                <label for="image">Caminho da imagem</label>
                             </div>
                         </div>
                     </div>
@@ -211,7 +227,9 @@
     <script>
       $(document).ready(function() {
         $('.modal-trigger').leanModal();
+         $(".button-collapse").sideNav();
       });
+
     </script>
 </body>
 </html>
