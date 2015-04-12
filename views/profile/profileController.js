@@ -2,50 +2,44 @@
 
 angular
     .module('shareBlood')
-    .controller('profileController', ['$http', function($http){
+    .controller('profileController', ['API', 'userService', function(API, userService){
 
         var profile = this;
 
         profile.get = function() {
+            var user_id = userService.get_user().id;
 
-            var user = {};
-            user.name = 'Thiago Dorneles';
-            user.gender = 'M';
-            user.birthdate = '20/07/1988';
-            user.history = [
-                {
-                    date: '01/01/2000',
-                    where: 'Hospital Santa Casa',
-                    who: 'Mauricio Antunes'
-                },
-                {
-                    date: '01/01/2000',
-                    where: 'Hospital Santa Casa',
-                    who: 'Mauricio Antunes'
-                },
-                {
-                    date: '01/01/2000',
-                    where: 'Hospital Santa Casa',
-                    who: 'Mauricio Antunes'
-                },
-                {
-                    date: '01/01/2000',
-                    where: 'Hospital Santa Casa',
-                    who: 'Mauricio Antunes'
-                },
-                {
-                    date: '01/01/2000',
-                    where: 'Hospital Santa Casa',
-                    who: 'Mauricio Antunes'
-                }
-            ];
+            API.get('users/' + user_id, null)
+                .success(function(data) {
 
-            if (user.gender === 'M')
-                user.gender_description = 'Masculino';
-            else
-                user.gender_description = 'Feminino';
+                    var user = data.user;
 
-            profile.user = user;
+                    if (user.profile.gender === 'M')
+                        user.profile.gender_description = 'Masculino';
+                    else
+                        user.profile.gender_description = 'Feminino';
+
+                    var aux = user.profile.birthdate.split('-');
+                    user.profile.birthdate = aux[2] + '/' + aux[1] + '/' + aux[0];
+
+                    profile.user = user;
+                });
+        };
+
+        profile.update = function() {
+            if (profile.user.profile.birthdate) {
+                var dates = profile.user.profile.birthdate.split('/');
+                var dt = new Date(parseInt(dates[2]), parseInt(dates[1])-1, parseInt(dates[0]));
+                profile.user.profile.birthdate = dt.toISOString().substr(0, 10);
+            }       
+            API.put('users/' + profile.user.id, profile.user)
+                .success(function(data){
+                    debugger;
+                })
+                .error(function(data) {
+                    debugger;
+                });
+
         };
 
         profile.get();

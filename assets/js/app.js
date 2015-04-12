@@ -1,4 +1,10 @@
-var app = angular.module('shareBlood', ['ngRoute']);
+var app = angular.module('shareBlood', ['ngRoute', 'ngCookies', 'ngMask']);
+
+app.run(['userService', function(userService){
+  if (userService.get_user()) {
+    userService.login(userService.get_user(), true);
+  }
+}]);
 
 app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
@@ -17,7 +23,8 @@ app.config(['$routeProvider', '$locationProvider',
       })
       .when('/', {
         templateUrl: '/views/donation/donation.html',
-        controller: 'donationController'
+        controller: 'donationController',
+        controllerAs: 'donation'
       })
       .when('/detalhes/:id', {
         templateUrl: '/views/donation/detail.html',

@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
-    rename = require('gulp-rename'),
+    // rename = require('gulp-rename'),
     concat = require('gulp-concat'),
     watch  = require('gulp-watch');
 

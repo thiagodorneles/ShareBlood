@@ -40,3 +40,10 @@ body {
     width: 85px;
     display: inline-block;
 }
+
+.modal {
+    &.large {
+        max-height: 90%;
+        top: 5% !important;
+    }
+}

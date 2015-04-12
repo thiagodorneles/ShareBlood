@@ -5,26 +5,29 @@
     <title>ShareBlood</title>
     <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css">
     <link rel="stylesheet" href="assets/dist/output.css">
-
 </head>
 <body ng-app="shareBlood">
     <div class="navbar-fixed">
-        <ul id="dropUser" class="dropdown-content">
-          <li><a ng-href="/meus-dados">Meus dados</a></li>
-          <li class="divider"></li>
-          <li><a href="#!">Sair</a></li>
-        </ul>
         <nav>
             <div class="container-fluid">
                 <a ng-href="/" class="brand-logo">
                     <img src="assets/img/logo.png" />
                 </a>
-                <ul class="right">
+                <ul class="right" ng-controller="userController as user">
                     <li><a ng-href="/faq">FAQ</a></li>
-                    <li><a href="">Entrar</a></li>
-                    <li><a href="#modalCadastro" class="modal-trigger">Cadastre-se</a></li>
-                    <li>
-                        <a class="dropdown-button" href="#!" data-activates="dropUser">Thiago Dorneles<i class="mdi-navigation-arrow-drop-down right"></i></a>
+                    <li><a ng-show="logged" href="#modalCampaign" class="modal-trigger">Preciso de Sangue</a></li>
+                    <li><a ng-hide="logged" href="#modalLogin" class="modal-trigger">Entrar</a></li>
+                    <li><a ng-hide="logged" href="#modalRegister" class="modal-trigger">Cadastre-se</a></li>
+                    <li ng-show="logged">
+                        <a class="dropdown-button" href="#!" data-activates="dropUser">
+                            {{user_name}}
+                            <i class="mdi-navigation-arrow-drop-down right"></i>
+                        </a>
+                        <ul id="dropUser" class="dropdown-content">
+                          <li><a ng-href="/meus-dados">Meus dados</a></li>
+                          <li class="divider"></li>
+                          <li><a ng-click="user.logout()">Sair</a></li>
+                        </ul>
                     </li>
 
                 </ul>
@@ -32,8 +35,36 @@
         </nav>
     </div>
     <ng-view></ng-view>
+    <div id="modalLogin" class="modal" ng-controller="userController as user">
+        <form ng-submit="user.login()">
+            <div class="modal-content">
+                <h4>Login</h4>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="row">
+                            <div class="input-field col m6 s12">
+                                <input type="email" id="email" ng-model="user.email">
+                                <label for="email">E-mail</label>
+                            </div>
+                            <div class="input-field col m6 s12">
+                                <input type="password" id="password" ng-model="user.password">
+                                <label for="password">Senha</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="left red-text" ng-show="user.erro">
+                    Usuário ou senha inválido!
+                </div>
+                <button type="submit"  class=" modal-action waves-effect waves-green btn">Entrar</button>
+                <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</button>
+            </div>
+        </form>
+    </div>
 
-    <div id="modalCadastro" class="modal" ng-controller="registerController as register">
+    <div id="modalRegister" class="modal" ng-controller="registerController as register">
         <form ng-submit="register.send()">
             <div class="modal-content">
                 <h4>Cadastre-se como doador</h4>
@@ -77,7 +108,7 @@
                                 <label for="password">Senha</label>
                             </div>
                             <div class="input-field col m3 s12">
-                                <input id="birthdate" type="date" ng-model="register.user.profile.birthdate" class="datepicker">
+                                <input id="birthdate" type="text" ng-model="register.user.profile.birthdate" mask="39/19/9999">
                                 <label for="birthdate">Data nascimento</label>
                             </div>
                         </div>
@@ -85,18 +116,122 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" onclick="register.send()" class=" modal-action waves-effect waves-green btn">Enviar</button>
+                <button type="submit" class=" modal-action waves-effect waves-green btn">Enviar</button>
                 <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</button>
             </div>
         </form>
-  </div>
+    </div>
+
+    <div id="modalCampaign" class="modal large" ng-controller="donationController as donation">
+        <form ng-submit="donation.send()">
+            <div class="modal-content">
+                <h4>Cadastre uma nova campanha</h4>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="row">
+                            <div class="input-field col md12 s12">
+                                <select id="ddlBloodBank" ng-model="donation.register.bloodbank">
+                                    <option value="">Selecione</option>
+                                    <option value="1">Santa Casa de Misericórdia de Porto Alegre</option>
+                                    <option value="2">Hospital Moinhos de Vento</option>
+                                    <option value="3">Hospital São Lucas da PUCRS</option>
+                                    <option value="4">Hospital de Clínicas de Porto Alegre</option>
+                                    <option value="5">Hospital Porto Alegre</option>
+                                    <option value="6">Divina Providencia</option>
+                                    <option value="7">Hospital Beneficência Portuguesa</option>
+                                </select>
+                                <label for="ddlBloodBank">Local de doação</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col m5 s12">
+                                <input type="text" id="txtName" ng-model="donation.register.favored">
+                                <label for="txtName">Nome do receptor</label>
+                            </div>
+                            <div class="input-field col m3 s12">
+                                <select id="ddlBloodType" ng-model="donation.register.favored_bood_type">
+                                    <option value="">Tipo de sangue</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div>
+                            <div class="input-field col m4 s12">
+                                <input type="text" id="txtQuantity" ng-model="donation.register.needed">
+                                <label for="txtQuantity">Quantidade de doadores</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col m3 s12">
+                                <input id="start_date" type="text"  mask="39/19/9999" ng-model="donation.register.start_date">
+                                <label for="start_date">Data de início</label>
+                            </div>
+                            <div class="input-field col m3 s12">
+                                <input id="end_date" type="text" mask="39/19/9999" ng-model="donation.register.end_date">
+                                <label for="end_date">Data de término</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col m12 s12">
+                                <textarea id="txtDescription" ng-model="donation.register.description" class="materialize-textarea"></textarea>
+                                <label for="txtDescription">Descrição</label>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="input-field col m6">
+                                <input type="text" id="txtAddress">
+                                <label for="txtAddress">Endereço</label>
+                            </div>
+                            <div class="input-field col m3">
+                                <input type="text" id="txtNumber">
+                                <label for="txtNumber">Número</label>
+                            </div>
+                            <div class="input-field col m3">
+                                <input type="text" id="txtNeighborhood">
+                                <label for="txtNeighborhood">Bairro</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col m6">
+                                <input type="text" id="txtCity">
+                                <label for="txtCity">Cidade</label>
+                            </div>
+                            <div class="input-field col m2">
+                                <input type="text" id="txtState">
+                                <label for="txtState">UF</label>
+                            </div>
+                            <div class="input-field col m4">
+                                <input type="text" id="txtCountry">
+                                <label for="txtCountry">País</label>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class=" modal-action waves-effect waves-green btn">Enviar</button>
+                <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</button>
+            </div>
+        </form>
+    </div>
 
     <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/materialize/dist/js/materialize.min.js"></script>
     <script src="bower_components/angularjs/angular.min.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-mask/dist/ngMask.js"></script>
     <script src="assets/js/app.js"></script>
+    <script src="assets/js/factories/userService.js"></script>
+    <script src="assets/js/factories/apiService.js"></script>
+    <script src="assets/js/factories/locationService.js"></script>
+    <script src="assets/js/controllers/userController.js"></script>
     <script src="views/donation/donationController.js"></script>
     <script src="views/donation/detailController.js"></script>
     <script src="views/faq/faqController.js"></script>

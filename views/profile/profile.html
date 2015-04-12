@@ -1,11 +1,76 @@
-<div class="container" ng-controller="profileController as profile">
+<div class="container-fluid" ng-controller="profileController as profile">
     <div class="card">
     <div class="row">
         <div class="col m4">
             <h4 class="header">Meus dados</h4>
-            {{profile.user.name}}<br/>
-            {{profile.user.gender_description}}<br/>
-            {{profile.user.birthdate | date:'shortDate'}}
+            <form ng-submit="profile.update()">
+            <div class="row">
+                <div class="input-field col m12">
+                    <input type="text" id="txtName" ng-model="profile.user.profile.name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m12">
+                    <select id="ddlGenre" ng-model="profile.user.profile.gender">
+                      <option value="M">Masculino</option>
+                      <option value="F">Feminino</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m12">
+                    <select id="ddlBloodType" ng-model="profile.user.profile.blood_type">
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m12">
+                    <input type="email" id="email" ng-model="profile.user.email">
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="input-field col m12">
+                    <input type="password" id="password" ng-model="profile.user.password">
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="input-field col m12">
+                    <input id="birthdate" type="text" ng-model="profile.user.profile.birthdate" mask="39/19/9999" placeholder="Data nascimento">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m9">
+                    <input type="text" id="txtAddress" placeholder="Endereço" ng-model="profile.user.address.street">
+                </div>
+                <div class="input-field col m3">
+                    <input type="text" id="txtNumber" placeholder="Número" ng-model="profile.user.address.number">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m12">
+                    <input type="text" id="txtNeighborhood" placeholder="Bairro" ng-model="profile.user.address.neighborhood">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m9">
+                    <input type="text" placeholder="Cidade" ng-model="profile.user.address.city">
+                </div>
+                <div class="input-field col m3">
+                    <input type="text" placeholder="UF" ng-model="profile.user.address.state">
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit">Atualizar</button>
+            </div>
+            </form>
         </div>
         <div class="col m8">
             <h4 class="header">Histórico de doações</h4>
@@ -21,3 +86,9 @@
     </div>
     </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+</script>
