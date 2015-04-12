@@ -1,0 +1,42 @@
+// @import "bower_components/materialize/sass/components/color";
+// @import "bower_components/materialize/sass/components/variables";
+//
+@import "cards";
+@import "variables";
+
+body {
+    background-color: #ECECEC;
+}
+.navbar-fixed nav {
+    background-color: $red;
+}
+.container-fluid {
+    padding: 0 15px;
+}
+
+ .card-panel {
+    position: relative;
+}
+.card-panel blockquote {
+    font-size: 0.7em;
+    border-color: gray;
+}
+.badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 5px;
+    background-color: red;
+    padding: 10px 5px;
+    color: white;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.search-bar {
+    background-color: white;
+}
+
+.collection-item strong {
+    width: 85px;
+    display: inline-block;
+}

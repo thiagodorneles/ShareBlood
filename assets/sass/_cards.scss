@@ -1,0 +1,62 @@
+.cards {
+
+    .card-image {
+        position: relative;
+        height: 180px;
+    }
+
+    .card p.card-city {
+        margin-top: -8px;
+
+        i {
+            margin-right: 5px;
+        }
+    }
+
+    i {
+        margin-top: 5px;
+        position: relative;
+        top: 1px;
+    }
+
+    .new.badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        z-index: 1000;
+        color: white;
+        font-weight: normal;
+        background-color: rgba(187, 43, 43, 0.8);
+        font-size: 1em;
+        margin-right: 0;
+
+        &:after {
+            content: "";
+        }
+
+        i {
+            top: 2px;
+        }
+
+    }
+
+    .card-person {
+        margin-top: 15px;
+    }
+
+    .project-progress-bar {
+        margin-top: 10px;
+    }
+
+    .card-action {
+        & > p:first-child{
+            margin-top: 15px;
+        }
+
+        text-align: right;
+
+        .btn {
+            background-color: rgba(187, 43, 43, 0.8);
+        }
+    }
+}
