@@ -1,0 +1,28 @@
+<div class="container" ng-controller="detailController as detail">
+    <div class="card">
+    <div class="row">
+        <div class="col m4">
+            <h4 class="header">Dados da campanha</h4>
+            {{detail.donation.favored}}<br/>
+            {{detail.donation.start_date}} até {{detail.donation.end_date}}<br/>
+            {{detail.donation.description}}
+            <br><br>
+            <h5>Local</h5>
+            <div class="divider"></div>
+            {{detail.donation.blood_bank.profile.name}}<br/>
+            {{detail.donation.blood_bank.address.street}}, {{detail.donation.blood_bank.address.number}}<br/>
+            {{detail.donation.blood_bank.address.city}}, {{detail.donation.blood_bank.address.state}}
+        </div>
+        <div class="col m8">
+            <h4 class="header">Histórico de doadores</h4>
+            <div class="divider"></div>
+            <ul class="collection">
+                <li class="collection-item" ng-repeat="history in detail.donation.donators">
+                    <span><strong>Nome:</strong>{{history.name}}</span><br/>
+                    <span><strong>Data:</strong>{{history.date}}</span><br/>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+</div>
