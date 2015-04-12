@@ -3,193 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <title>ShareBlood</title>
-      <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="assets/dist/output.css">
 
 </head>
-<body ng-app="app">
+<body ng-app="shareBlood">
     <div class="navbar-fixed">
+        <ul id="dropUser" class="dropdown-content">
+          <li><a ng-href="/meus-dados">Meus dados</a></li>
+          <li class="divider"></li>
+          <li><a href="#!">Sair</a></li>
+        </ul>
         <nav>
-            <div class="container">
-                <a href="#" class="brand-logo">Share Blood</a>
+            <div class="container-fluid">
+                <a ng-href="/" class="brand-logo">
+                    <img src="assets/img/logo.svg" />
+                </a>
                 <ul class="right">
-                    <li><a href="">FAQ</a></li>
+                    <li><a ng-href="/faq">FAQ</a></li>
                     <li><a href="">Entrar</a></li>
-                    <li><a href="">Cadastre-se</a></li>
+                    <li><a href="#modalCadastro" class="modal-trigger">Cadastre-se</a></li>
+                    <li>
+                        <a class="dropdown-button" href="#!" data-activates="dropUser">Thiago Dorneles<i class="mdi-navigation-arrow-drop-down right"></i></a>
+                    </li>
+
                 </ul>
             </div>
         </nav>
     </div>
-    <section class="search-bar">
-        <div class="container">
-            <div class="row">
-                <div class="input-field col s6">
-                    <i class="mdi-action-search middle prefix"></i>
-                    <input type="text" placeholder="Pesquisar">
-                </div>
-                 <div class="input-field col s3">
-                    <select>
-                      <option value="" disabled selected>Cidade</option>
-                      <option value="1">Option 1</option>
-                      <option value="2">Option 2</option>
-                      <option value="3">Option 3</option>
-                    </select>
-                  </div>
-                <div class="input-field col s3">
-                    <select>
-                      <option value="" disabled selected>Tipo sanguíneo</option>
-                      <option value="1">Option 1</option>
-                      <option value="2">Option 2</option>
-                      <option value="3">Option 3</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="cards">
-    <div class="container">
-        <div class="row">
-            <div class="col s4">
-                <div class="card-panel">
-                    <div class="badge">
-                        10/50
+    <ng-view></ng-view>
+
+    <div id="modalCadastro" class="modal" ng-controller="registerController as register">
+        <form ng-submit="register.send()">
+            <div class="modal-content">
+                <h4>Cadastre-se como doador</h4>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="row">
+                            <div class="input-field col m6 s12">
+                                <input type="text" id="txtName" ng-model="register.user.profile.name">
+                                <label for="txtName">Nome</label>
+                            </div>
+                            <div class="input-field col m3 s12">
+                                <select id="ddlGenre" ng-model="register.user.profile.gender">
+                                  <option value="" disabled selected>Sexo</option>
+                                  <option value="M">Masculino</option>
+                                  <option value="F">Feminino</option>
+                                </select>
+                                <label for="ddlGenre">Sexo</label>
+                            </div>
+                            <div class="input-field col m3 s12">
+                                <select id="ddlBloodType" ng-model="register.user.profile.blood_type">
+                                    <option value=""></option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                                <label for="ddlBloodType">Tipo sanguíneo</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col m6 s12">
+                                <input type="email" id="email" ng-model="register.user.email">
+                                <label for="email">E-mail</label>
+                            </div>
+                            <div class="input-field col m3 s12">
+                                <input type="password" id="password" ng-model="register.user.password">
+                                <label for="password">Senha</label>
+                            </div>
+                            <div class="input-field col m3 s12">
+                                <input id="birthdate" type="date" ng-model="register.user.profile.birthdate" class="datepicker">
+                                <label for="birthdate">Data nascimento</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="valign-wrapper">
-                        <img class="circle left large responsive-img" src="http://gravatar.com/avatar/038092cd074e5364a722c6879ba42020?size=35" />
-                        <h5>Maria da Silva</h5>
-                    </div>
-                    <div class="card-content">
-                        <blockquote>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus dignissimos fuga quasi magnam maxime voluptatum provident, debitis
-                        </blockquote>
-                    </div>
-                    <div class="card-footer valing-wrapper">
-                        <i class="mdi-maps-local-hospital"></i>
-                        Hospital Santa Casa
-                    </div>
-                    Até dia 09/07/15
-                </div>
-            </div>
-            <div class="col s4">
-                <div class="card-panel">
-                    <div class="badge">
-                        10/50
-                    </div>
-                    <div class="valign-wrapper">
-                        <img class="circle left large responsive-img" src="http://gravatar.com/avatar/038092cd074e5364a722c6879ba42020?size=35" />
-                        <h5>Maria da Silva</h5>
-                    </div>
-                    <div class="card-content">
-                        <blockquote>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus dignissimos fuga quasi magnam maxime voluptatum provident, debitis
-                        </blockquote>
-                    </div>
-                    <div class="card-footer valing-wrapper">
-                        <i class="mdi-maps-local-hospital"></i>
-                        Hospital Santa Casa
-                    </div>
-                    Até dia 09/07/15
-                </div>
-            </div><div class="col s4">
-                <div class="card-panel">
-                    <div class="badge">
-                        10/50
-                    </div>
-                    <div class="valign-wrapper">
-                        <img class="circle left large responsive-img" src="http://gravatar.com/avatar/038092cd074e5364a722c6879ba42020?size=35" />
-                        <h5>Maria da Silva</h5>
-                    </div>
-                    <div class="card-content">
-                        <blockquote>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus dignissimos fuga quasi magnam maxime voluptatum provident, debitis
-                        </blockquote>
-                    </div>
-                    <div class="card-footer valing-wrapper">
-                        <i class="mdi-maps-local-hospital"></i>
-                        Hospital Santa Casa
-                    </div>
-                    Até dia 09/07/15
-                </div>
-            </div><div class="col s4">
-                <div class="card-panel">
-                    <div class="badge">
-                        10/50
-                    </div>
-                    <div class="valign-wrapper">
-                        <img class="circle left large responsive-img" src="http://gravatar.com/avatar/038092cd074e5364a722c6879ba42020?size=35" />
-                        <h5>Maria da Silva</h5>
-                    </div>
-                    <div class="card-content">
-                        <blockquote>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus dignissimos fuga quasi magnam maxime voluptatum provident, debitis
-                        </blockquote>
-                    </div>
-                    <div class="card-footer valing-wrapper">
-                        <i class="mdi-maps-local-hospital"></i>
-                        Hospital Santa Casa
-                    </div>
-                    Até dia 09/07/15
                 </div>
             </div>
-            <div class="col s4">
-                <div class="card-panel">
-                    <div class="badge">
-                        10/50
-                    </div>
-                    <div class="valign-wrapper">
-                        <img class="circle left large responsive-img" src="http://gravatar.com/avatar/038092cd074e5364a722c6879ba42020?size=35" />
-                        <h5>Maria da Silva</h5>
-                    </div>
-                    <div class="card-content">
-                        <blockquote>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus dignissimos fuga quasi magnam maxime voluptatum provident, debitis
-                        </blockquote>
-                    </div>
-                    <div class="card-footer valing-wrapper">
-                        <i class="mdi-maps-local-hospital"></i>
-                        Hospital Santa Casa
-                    </div>
-                    Até dia 09/07/15
-                </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="register.send()" class=" modal-action waves-effect waves-green btn">Enviar</button>
+                <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</button>
             </div>
-        </div>
-    </div>
-    </section>
+        </form>
+  </div>
+
+    <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/materialize/dist/js/materialize.min.js"></script>
     <script src="bower_components/angularjs/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="assets/js/app.js"></script>
+    <script src="views/donation/donationController.js"></script>
+    <script src="views/donation/detailController.js"></script>
+    <script src="views/faq/faqController.js"></script>
+    <script src="views/profile/profileController.js"></script>
+    <script src="assets/js/registerController.js"></script>
+
     <script>
       $(document).ready(function() {
-        $('select').material_select();
+        $('.modal-trigger').leanModal();
       });
-      </script>
-
-    <style>
-        .card-panel {
-            position: relative;
-        }
-        .card-panel blockquote {
-            font-size: 0.7em;
-            border-color: gray;
-        }
-        .badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            margin-right: 5px;
-            background-color: red;
-            padding: 10px 5px;
-            color: white;
-            border-bottom-right-radius: 10px;
-            border-bottom-left-radius: 10px;
-        }
-        .search-bar {
-            background-color: white;
-        }
-        .cards {
-            background-color: #ECECEC;
-        }
-
-    </style>
+    </script>
 </body>
 </html>
